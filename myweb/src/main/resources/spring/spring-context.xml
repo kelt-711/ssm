@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.3.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!--
+        1.base-package：指定Spring IOC容器扫描的包
+        2.context:exclude-filter：指定排除哪些表达式的组件，此处排除了Controller注解
+          原因：Controller注解的的作用是声明控制器（处理器）类。从数据流转的角度，
+                    这个类应该是由SpringMVC框架进行管理和组织的，所以不需要由Spring框架扫描。
+     -->
+    <context:component-scan base-package="com.test.*" >
+        <context:exclude-filter type="annotation"
+                                expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+
+    <!-- 3.加载数据库的属性文件并配置数据库连接池(c3p0) -->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" >
+        <property name="driverClass" value="com.mysql.jdbc.Driver"/>
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/ssmtest?rewriteBatchedStatements=true&amp;useUnicode=true&amp;characterEncoding=utf8"/>
+        <property name="user" value="root"/>
+        <property name="password" value="15272595644"/>
+    </bean>
+
+    <!-- 4.集成Mybatis框架 ，通过spring配置Mybatis的核心对象SqlSessionFactory以及完成其他配置-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean" >
+        <property name="configLocation" value="classpath:mybatis/config.xml" />
+        <property name="dataSource" ref="dataSource" />
+        <property name="mapperLocations" >
+            <list>
+                <value>classpath*:mybatis/mapper-*.xml</value>
+            </list>
+        </property>
+    </bean>
+    <!--
+   		  在spring与mybatis整合时，需要对每一个mapper定义对应的一个MapperFactoryBean，
+    	  可以使用MapperScannerConfigurer自动扫描mapper，然后自动注册对应的MapperFactoryBean对象
+    -->
+    <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer" >
+        <property name="basePackage" value="com.test.dao" />
+    </bean>
+
+
+    <!-- 5.Spring框架采用声明式事务，通过AOP的方式将事务增加到业务中 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <!--控制住数据源  -->
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <tx:advice id="transactionAdvice" transaction-manager="transactionManager" >
+        <tx:attributes>
+            <tx:method name="*" propagation="REQUIRED" isolation="DEFAULT" rollback-for="java.lang.Exception" />
+            <tx:method name="query*" read-only="true" />
+        </tx:attributes>
+    </tx:advice>
+    <aop:config>
+        <aop:advisor advice-ref="transactionAdvice" pointcut="execution(* com..*Service.*(..))"/>
+    </aop:config>
+
+
+</beans>

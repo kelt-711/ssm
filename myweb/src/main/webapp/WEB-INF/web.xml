@@ -1,7 +1,79 @@
-<!DOCTYPE web-app PUBLIC
- "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
- "http://java.sun.com/dtd/web-app_2_3.dtd" >
+<?xml version="1.0" encoding="UTF-8"?>
 
-<web-app>
-  <display-name>Archetype Created Web Application</display-name>
+<web-app version="2.4"
+         xmlns="http://java.sun.com/xml/ns/j2ee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
+         http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+
+  <!--
+		1.将Spring框架集成到项目中
+		1).Spring环境构建时读取web应用的初始化参数contextConfigLocation,
+		      从classpath中读取配置文件spring/spring-*.xml
+		2).Spring的初始化:ContextLoaderListener的作用是启动Web容器时， 自动装配
+		  spring-*.xml的配置信息（因为它实现了ServletContextListener
+		    这个接口，在web.xml配置这个监听器，启动容器时，就会默认执行它实现的方法。）
+	-->
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>classpath*:spring/spring-*.xml</param-value>
+  </context-param>
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+
+
+  <!--
+      2.集成SpringMVC框架
+      1)SpringMVC环境构建时需要读取servlet初始化参数init-param,
+           从classpath中读取配置文件spring/springmvc-context.xml
+      2)load-on-startup：当值为0或者大于0时，表示容器在应用启动时就加载这个servlet，
+           当是一个负数时或者没有指定时，则指示容器在该servlet被选择时才加载。
+          正数的值越小，启动该servlet的优先级越高。
+   -->
+  <servlet>
+    <servlet-name>springmvc</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath:spring/springmvc-context.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>springmvc</servlet-name>
+    <url-pattern>/</url-pattern>   <!-- 拦截所有请求 -->
+  </servlet-mapping>
+
+
+  <!--
+      3.使用spring提供的过滤器CharacterEncodingFilter解决乱码问题
+        乱码问题有get方式提交和post方式提交2种情况
+        1)解决get方式：在Tomcat的配置文件server.xml中的<Connector  connectionTimeout="20000"
+          port="8080" protocol="HTTP/1.1" redirectPort="8443"/>添加URIEncoding="UTF-8"即可
+        2)解决post方式：如下所示，增加过滤器
+  -->
+  <filter>
+    <filter-name>encoding</filter-name>
+    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+    <init-param>
+      <param-name>forceEncoding</param-name>
+      <param-value>true</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>encoding</filter-name>
+    <servlet-name>springmvc</servlet-name>
+  </filter-mapping>
+
+  <!--4.注册监听器-->
+  <listener>
+    <listener-class>com.test.listener.LoginSessionListener</listener-class>
+  </listener>
+
 </web-app>
+        
