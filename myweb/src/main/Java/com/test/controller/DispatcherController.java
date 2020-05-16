@@ -1,7 +1,7 @@
 package com.test.controller;
 
-import com.test.bean.AjaxResult;
-import com.test.bean.User;
+import com.test.service.bean.AjaxResult;
+import com.test.service.bean.User;
 import com.test.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

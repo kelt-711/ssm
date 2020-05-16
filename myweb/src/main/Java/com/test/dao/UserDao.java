@@ -1,6 +1,6 @@
 package com.test.dao;
 
-import com.test.bean.User;
+import com.test.service.bean.User;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
