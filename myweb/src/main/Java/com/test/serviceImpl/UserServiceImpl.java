@@ -1,6 +1,6 @@
 package com.test.serviceImpl;
 
-import com.test.service.bean.User;
+import com.test.bean.User;
 import com.test.dao.UserDao;
 import com.test.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

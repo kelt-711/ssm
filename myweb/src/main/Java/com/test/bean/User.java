@@ -1,4 +1,4 @@
-package com.test.service.bean;
+package com.test.bean;
 
 public class User {
 

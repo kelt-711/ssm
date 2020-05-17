@@ -1,6 +1,6 @@
 package com.test.service;
 
-import com.test.service.bean.User;
+import com.test.bean.User;
 
 public interface UserService {
 

@@ -5,7 +5,7 @@
 
     <!--用户注册-->
     <insert id="insertUser">
-        insert INTO t_user (username, password)
+        insert INTO t_test (username, password)
         values (#{username},#{password})
     </insert>
 

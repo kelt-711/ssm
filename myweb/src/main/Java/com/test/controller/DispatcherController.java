@@ -1,7 +1,7 @@
 package com.test.controller;
 
-import com.test.service.bean.AjaxResult;
-import com.test.service.bean.User;
+import com.test.bean.AjaxResult;
+import com.test.bean.User;
 import com.test.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -50,6 +50,7 @@ public class DispatcherController {
         //登录成功
         if(dbUser != null){
             //将用户放入session中
+            System.out.print(dbUser.getUsername());
             session.setAttribute("loginUser",dbUser.getUsername());
 
             //获取是否记住用户名单选框的状态
