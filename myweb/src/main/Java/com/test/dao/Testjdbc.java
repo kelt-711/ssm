@@ -1,4 +1,4 @@
-package com.test.dao;
+/*package com.test.dao;
 import java.sql.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -37,4 +37,4 @@ public class Testjdbc {
 
 
 
-}
+}*/

@@ -8,7 +8,7 @@
   <modelVersion>4.0.0</modelVersion>
   <packaging>war</packaging>
 
-  <name>ssmtest</name>
+  <name>saltest</name>
   <groupId>com.test</groupId>
   <artifactId>ssmtest</artifactId>
   <version>1.0-SNAPSHOT</version>
@@ -21,7 +21,7 @@
         <version>6.1.7</version>
         <configuration>
           <connectors>
-            <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
+            <connector implementation="org.moray.jetty.nio.SelectChannelConnector">
               <port>8888</port>
               <maxIdleTime>30000</maxIdleTime>
             </connector>
@@ -111,7 +111,7 @@
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
-      <version>8.0.18</version>
+      <version>8.0.15</version>
     </dependency>
 
     <!-- JSP：标准标签库

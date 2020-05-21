@@ -30,10 +30,10 @@
 
     <!-- 3.加载数据库的属性文件并配置数据库连接池(c3p0) -->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" >
-        <property name="driverClass" value="com.mysql.jdbc.Driver"/>
-        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/ssmtest?rewriteBatchedStatements=true&amp;useUnicode=true&amp;characterEncoding=utf8"/>
+        <property name="driverClass" value="com.mysql.jc.jdbc.Driver"/>
+        <property name="jdbcUrl" value="jdbc:mysql://49.235.51.187:3306/web?rewriteBatchedStatements=true&amp;useUnicode=true&amp;characterEncoding=utf8"/>
         <property name="user" value="root"/>
-        <property name="password" value="15272595644"/>
+        <property name="password" value="123456Web%"/>
     </bean>
 
     <!-- 4.集成Mybatis框架 ，通过spring配置Mybatis的核心对象SqlSessionFactory以及完成其他配置-->

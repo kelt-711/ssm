@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.swing.*;
 
 
 @Controller
@@ -58,7 +59,7 @@ public class DispatcherController {
                 // 完成记住用户名的功能:
                 Cookie cookie = new Cookie("username",user.getUsername());
                 //设置有效路径:
-                cookie.setPath("/ssmtest");
+                cookie.setPath("/my web");
                 // 设置有效时间:
                 cookie.setMaxAge(60*60*24);// 保存24小时
                 // 将cookie回写到浏览器：
