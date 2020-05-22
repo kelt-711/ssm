@@ -30,7 +30,7 @@
 
     <!-- 3.加载数据库的属性文件并配置数据库连接池(c3p0) -->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" >
-        <property name="driverClass" value="com.mysql.jc.jdbc.Driver"/>
+        <property name="driverClass" value="com.mysql.cj.jdbc.Driver"/>
         <property name="jdbcUrl" value="jdbc:mysql://49.235.51.187:3306/web?rewriteBatchedStatements=true&amp;useUnicode=true&amp;characterEncoding=utf8"/>
         <property name="user" value="root"/>
         <property name="password" value="123456Web%"/>
