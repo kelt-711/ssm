@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+
+</head>
+<body>
+
+<p id="test">hello world</p>
+<input id="btn" type="button" value="click test"/>
+<p id="p1"></p>
+
+
+</body>
+</html>
+<script>
+    $(function(){
+        $("#btn").click(function(){
+            $.ajax({
+                type:"post",
+                url:"http://localhost:8082/test1/user/select",
+                data:{
+
+                },
+                dataType:"json",
+                async:true,
+                success: function(data){
+                    alert(JSON.stringify(data.name))
+                    $("#p1").html(data.id + "," + data.name + "," + data.nameId +"," + data.sex + "," + data.age)
+                }
+            })
+        })
+
+    })
+</script>

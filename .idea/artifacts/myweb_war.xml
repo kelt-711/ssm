@@ -7,7 +7,7 @@
         <packaging>war</packaging>
       </options>
     </properties>
-    <root id="archive" name="ssmtest-1.0-SNAPSHOT.war">
+    <root id="archive" name="myweb-1.0-SNAPSHOT.war">
       <element id="artifact" artifact-name="myweb:war exploded" />
     </root>
   </artifact>
